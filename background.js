@@ -1,24 +1,14 @@
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "startFocus") {
-    console.log("Focus session initiated.");
-    // Here you can add logic for blocking distracting websites
-    blockDistractingSites();
-    sendResponse({ status: "Focus started" });
-  }
+import { blockWebsites, unblockWebsites } from "./dynamicRules.js";
+const actions = { blockWebsites, unblockWebsites };
+console.log(actions);
+
+chrome.runtime.onConnect.addListener((port) => {
+  console.log("Connected to:", port.name);
+
+  // Listen for messages from the popup or other parts of the extension
+  port.onMessage.addListener((msg) => {
+    console.log(msg);
+    console.log(actions);
+    actions[msg.action]?.();
+  });
 });
-
-function blockDistractingSites() {
-  const distractingUrls = [
-    "*://*.facebook.com/*",
-    "*://*.youtube.com/*",
-    "*://*.twitter.com/*",
-  ];
-
-  chrome.webRequest.onBeforeRequest.addListener(
-    (details) => {
-      return { cancel: true }; // Block the request
-    },
-    { urls: distractingUrls },
-    ["blocking"]
-  );
-}
