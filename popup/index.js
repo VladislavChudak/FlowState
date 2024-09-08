@@ -14,6 +14,10 @@
     port.postMessage({ action: "unblockWebsites" });
   });
 
+  document.getElementById("open-options").addEventListener("click", () => {
+    chrome.runtime.openOptionsPage();
+  });
+
   function clearYouTubeCache() {
     let removalOptions = {
       origins: [new URL("https://www.youtube.com").origin],

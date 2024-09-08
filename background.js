@@ -1,6 +1,6 @@
-import { blockWebsites, unblockWebsites } from "./dynamicRules.js";
+import { blockWebsites, unblockWebsites } from "./rules/dynamicRules.js";
+
 const actions = { blockWebsites, unblockWebsites };
-console.log(actions);
 
 chrome.runtime.onConnect.addListener((port) => {
   console.log("Connected to:", port.name);
