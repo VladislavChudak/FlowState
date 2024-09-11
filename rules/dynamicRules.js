@@ -1,3 +1,5 @@
+import { stopBlocking, startBlocking } from "../background.js";
+
 const rules = [
   {
     id: 1,
@@ -48,6 +50,8 @@ export function blockWebsites() {
       }
     }
   );
+
+  startBlocking();
 }
 
 export function unblockWebsites() {
@@ -68,4 +72,6 @@ export function unblockWebsites() {
       }
     }
   );
+
+  stopBlocking();
 }
